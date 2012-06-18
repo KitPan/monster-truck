@@ -18,10 +18,11 @@ public:
   //Update
   //======
   void updatePID(int value, float timeIn) {
-    for(int i = 1; i <= derivativeFreq; i ++) {
-      error[i] = error[i - 1];
-      time[i] = time[i - 1];
-    }
+    if(enableI||enableD)
+      for(int i = 1; (i <= derivativeFreq)||(i <= 1); i ++) {
+        error[i] = error[i - 1];
+        time[i] = time[i - 1];
+      }
     error[0] = value - goal;
     time[0] = timeIn;
     
@@ -32,7 +33,7 @@ public:
       derivative = ((float) (error[derivativeFreq] - error[0]))/deltaTime;
     }
     if(enableI)
-      intergral += (float) (error[0]*time[0]);
+      intergral += ((float) (error[0] + error[1])/2)*time[0];
     proportion = (float) error[0];
     
     pid = (int) (proportion*kP);
