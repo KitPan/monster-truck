@@ -22,18 +22,18 @@ public:
       error[i] = error[i - 1];
       time[i] = time[i - 1];
     }
-    error[i] = value - goal;
-    time[i] = timeIn;
+    error[0] = value - goal;
+    time[0] = timeIn;
     
     if(enableD) {
       float deltaTime = 0.0;
-      for(int i = 0; i <= derivativeFreq)
+      for(int i = 0; i <= derivativeFreq; i ++)
         deltaTime += time[i];
       derivative = ((float) (error[derivativeFreq] - error[0]))/deltaTime;
     }
     if(enableI)
       intergral += (float) (error[0]*time[0]);
-    proportion = errorNew;
+    proportion = (float) error[0];
     
     pid = (int) (proportion*kP);
     if(enableD)
