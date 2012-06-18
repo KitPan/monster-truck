@@ -17,16 +17,25 @@ public:
   //======
   //Update
   //======
-  void updatePID(int value, float time) {
-    int errorNew = value - goal;
+  void updatePID(int value, float timeIn) {
+    for(int i = 1; i <= derivativeFreq; i ++) {
+      error[i] = error[i - 1];
+      time[i] = time[i - 1];
+    }
+    error[i] = value - goal;
+    time[i] = timeIn;
     
-    if(enableD)
-      derivative = ((float) (errorNew - error))/time;
+    if(enableD) {
+      float deltaTime = 0.0;
+      for(int i = 0; i <= derivativeFreq)
+        deltaTime += time[i];
+      derivative = ((float) (error[derivativeFreq] - error[0]))/deltaTime;
+    }
     if(enableI)
-      intergral += ((float) error)*time;
-    error = errorNew;
+      intergral += (float) (error[0]*time[0]);
+    proportion = errorNew;
     
-    pid = (int) (error*kP);
+    pid = (int) (proportion*kP);
     if(enableD)
       pid += (int) (derivative*kD);
     if(enableI)
@@ -39,7 +48,7 @@ public:
     if(!enableBrakeCheck)
       return pid;
     
-    if(brakeCheckCount >= brakeCheckFrequency) {
+    if(brakeCheckCount >= brakeCheckFreq) {
       brakeCheckCount = 0;
       return 0;
     }
@@ -51,7 +60,7 @@ public:
   float getKP() {return kP;}  //0 Means Disabled
   float getKD() {return kD;}  //0 Means Disabled
   int getGoal() {return goal;}
-  int getBrakeCheckFrequency() {return brakeCheckFrequency;}  //0 Means Disabled
+  int getBrakeCheckFreq() {return brakeCheckFreq;}  //0 Means Disabled
   
   void setKP(float kPIn) {kP = kPIn;}
   void setGoal(int goalIn) {goal = goalIn;}
@@ -60,54 +69,71 @@ public:
   //Misc.
   //=====
   void clearPID() {
-    error = 0;
+    proportion = 0.0;
     derivative = 0.0;
     intergral = 0.0;
+    
+    for(int i = 0; i < 10; i ++) {
+      error[i] = 0.0;
+      time[i] = 0;
+    }
   }
   
   void addI(float kIIn) {
     enableI = true;
     kI = kIIn;
   }
-  void addD(float kDIn) {
+  void addD(float kDIn, int derivativeFreqIn) {
     enableD = true;
     kD = kDIn;
+    derivativeFreq = derivativeFreqIn;
+    if(derivativeFreq > 9)
+      derivativeFreq = 9;
+    if(derivativeFreq < 1)
+      derivativeFreq = 1;
   }
-  void addBrakeCheck(int brakeCheckFrequencyIn) {
+  void addBrakeCheck(int brakeCheckFreqIn) {
     enableBrakeCheck = true;
-    brakeCheckFrequency = brakeCheckFrequencyIn;
+    brakeCheckFreq = brakeCheckFreqIn;
   }
   void removeI() {
     enableI = false;
     kI = 0.0;
+    intergral = 0.0;
   }
   void removeD() {
     enableD = false;
     kD = 0.0;
+    derivative = 0.0;
+    derivativeFreq = 0;
   }
   void removeBrakeCheck() {
     enableBrakeCheck = false;
-    brakeCheckFrequency = 0;
+    brakeCheckFreq = 0;
     brakeCheckCount = 0;
   }
 private:
   int goal;
   
-  int error;
-  float derivative;
-  float intergral;
+  int error[10];
+  float time[10];
   
   int pid;
   
   float kP;
-  float kI;
-  float kD;
+  float proportion;
   
   boolean enableD;
-  boolean enableI;
+  float kD;
+  float derivative;
+  int derivativeFreq;
   
-  int brakeCheckCount;
-  int brakeCheckFrequency;
+  boolean enableI;
+  float kI;
+  float intergral;
   
   boolean enableBrakeCheck;
+  int brakeCheckCount;
+  int brakeCheckFreq;
+  
 };

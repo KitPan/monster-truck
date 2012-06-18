@@ -69,7 +69,7 @@ void setup(void) {
   zeroGTh = new PID(0, -.060);
   zeroGTh->addBrakeCheck(10);
   Serial.println("Full Gravity Throttle ");
-  fullGTh = new PID(0, 0.0);
+  fullGTh = new PID(10*100, .2);
   Serial.println("Full Gravity Steering ");
   fullGSt = new PID(0, 0.0);
   
@@ -116,9 +116,7 @@ void loop(void) {
     else {
       if(!con->getThZero()) {
         int throttle = con->getThVal() - con->getThValZero();
-        int throttleMax = 0;
-        if(pos->getPitch() < 1000)
-          throttleMax = 600;
+        int throttleMax = 600 + fullGTh->getPID();
           
         if(throttle > throttleMax)
           throttle = throttleMax;
