@@ -1,0 +1,20 @@
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\bin\Debug\iNterface.exe
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\bin\Debug\iNterface.pdb
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\iNterface.iNterface.resources
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\iNterface.Properties.Resources.resources
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\iNterface.exe
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\iNterface.pdb
+C:\Users\Nelson\Documents\Visual Studio 2010\Projects\iNterface\iNterface\obj\x86\Debug\iNterface.Plot.resources
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\iNterface.exe
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\iNterface.pdb
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\iNterface.iNterface.resources
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\iNterface.Plot.resources
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\iNterface.Properties.Resources.resources
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\bin\Debug\iNterface.exe
+Z:\Dropbox\University\Monster Truck\Code\C# - Serial Interface\iNterface\iNterface\bin\Debug\iNterface.pdb
