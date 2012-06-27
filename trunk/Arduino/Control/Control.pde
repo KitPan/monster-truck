@@ -30,14 +30,14 @@
 //Degugging Definitions
 //#define DEBUG_PLOT
 //#define DEBUG_PRINT
-#define DEBUG_INTERFACE
+//#define DEBUG_INTERFACE
 
 //#define DEBUG_ZEROG
 //#define DEBUG_FULLG
 
 //#define DEBUG_NO_CONTROL
 //#define DEBUG_NO_ZEROG_CONTROL
-//#define DEBUG_NO_FULLG_CONTROL
+#define DEBUG_NO_FULLG_CONTROL
 
 //Global Objects
 FastSerialPort(Serial, 3);
@@ -48,7 +48,8 @@ Position *pos;
 Control *con;
 
 PID *zeroGTh;
-PID *fullGTh;
+PID *fullGThFwd;
+PID *fullGThRev;
 PID *fullGSt;
 
 
@@ -65,13 +66,14 @@ void setup(void) {
   pos = new Position(g_gps, &isr_registry, 2);
   
   Serial.println("\nPID Setup");
-  Serial.println("Zero Gravity Throttle ");
-  zeroGTh = new PID(0, -.060);
+  Serial.println("Zero Gravity Throttle");
+  zeroGTh = new PID(0, -.060, 0.0, 0.0);
   zeroGTh->addBrakeCheck(10);
-  Serial.println("Full Gravity Throttle ");
-  fullGTh = new PID(10*100, .2);
-  Serial.println("Full Gravity Steering ");
-  fullGSt = new PID(0, 0.0);
+  Serial.println("Full Gravity Throttle");
+  fullGThFwd = new PID(10*100, -0.2, 0.0, 0.0);
+  fullGThRev = new PID(-10*100, 0.2, 0.0, 0.0);
+  Serial.println("Full Gravity Steering");
+  fullGSt = new PID(0, 0.1, 0.0, 0.0);
   
   Serial.println("\nStart!");
 }
@@ -100,12 +102,13 @@ void loop(void) {
     //Processing
     //==========
     zeroGTh->updatePID(pos->getPitch(), pos->getTime());
-    fullGTh->updatePID(pos->getPitch(), pos->getTime());
+    fullGThFwd->updatePID(pos->getPitch(), pos->getTime());
+    fullGThRev->updatePID(pos->getPitch(), pos->getTime());
     fullGSt->updatePID(pos->getRoll(), pos->getTime());
     
     //Mid Air Stabilization
     if(pos->getZeroG()) {
-      thOut = con->getThValZero() + zeroGTh->getPID();
+      thOut = con->getThValZero() + (int) zeroGTh->getPID();
       stOut = con->getStVal();
       
       #ifdef DEBUG_NO_ZEROG_CONTROL
@@ -116,10 +119,21 @@ void loop(void) {
     else {
       if(!con->getThZero()) {
         int throttle = con->getThVal() - con->getThValZero();
-        int throttleMax = 600 + fullGTh->getPID();
-          
+        
+        int throttleMax = 600 + (int) fullGThFwd->getPID();
+        int throttleMin = -600 - (int) fullGThRev->getPID();
+        
+        if(throttleMax < 0)
+          throttleMax = 0;
+        if(throttleMin > 0)
+          throttleMin = 0;
+        
         if(throttle > throttleMax)
           throttle = throttleMax;
+        if(throttle < throttleMin)
+          throttle = throttleMin;
+        
+        Serial.println((int) fullGSt->getPID());
         
         thOut = con->getThValZero() + throttle;
         stOut = con->getStVal();
