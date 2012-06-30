@@ -37,7 +37,7 @@
 
 //#define DEBUG_NO_CONTROL
 //#define DEBUG_NO_ZEROG_CONTROL
-#define DEBUG_NO_FULLG_CONTROL
+//#define DEBUG_NO_FULLG_CONTROL
 
 //Global Objects
 FastSerialPort(Serial, 3);
@@ -67,11 +67,11 @@ void setup(void) {
   
   Serial.println("\nPID Setup");
   Serial.println("Zero Gravity Throttle");
-  zeroGTh = new PID(0, -.060, 0.0, 0.0);
+  zeroGTh = new PID(0, -0.12, 0.0, -0.016);
   zeroGTh->addBrakeCheck(10);
   Serial.println("Full Gravity Throttle");
-  fullGThFwd = new PID(10*100, -0.2, 0.0, 0.0);
-  fullGThRev = new PID(-10*100, 0.2, 0.0, 0.0);
+  fullGThFwd = new PID(10*100, -0.2, 0.0, -0.016);
+  fullGThRev = new PID(-10*100, 0.2, 0.0, 0.016);
   Serial.println("Full Gravity Steering");
   fullGSt = new PID(0, 0.1, 0.0, 0.0);
   
@@ -123,6 +123,10 @@ void loop(void) {
         int throttleMax = 600 + (int) fullGThFwd->getPID();
         int throttleMin = -600 - (int) fullGThRev->getPID();
         
+        Serial.print(throttleMax);
+        Serial.print(" ");
+        Serial.println(throttleMin);
+        
         if(throttleMax < 0)
           throttleMax = 0;
         if(throttleMin > 0)
@@ -132,8 +136,6 @@ void loop(void) {
           throttle = throttleMax;
         if(throttle < throttleMin)
           throttle = throttleMin;
-        
-        Serial.println((int) fullGSt->getPID());
         
         thOut = con->getThValZero() + throttle;
         stOut = con->getStVal();

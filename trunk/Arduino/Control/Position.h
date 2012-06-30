@@ -29,7 +29,7 @@ public:
       gravityTemp += fixXY(imu->get_accel()).z;
     }
     gravity = -gravityTemp/10;
-    zeroGSet = gravity/2;
+    zeroGSet = gravity/1.5;
     
     Serial.printf("Gravity = %4.4f\n", gravity);
     Serial.printf("Zero Gravity = %4.4f\n", zeroGSet);
