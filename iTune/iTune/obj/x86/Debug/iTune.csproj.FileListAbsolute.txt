@@ -1,0 +1,9 @@
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\iTune.iTune.resources
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\iTune.Properties.Resources.resources
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\bin\Debug\iTune.exe
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\bin\Debug\iTune.pdb
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\iTune.exe
+c:\users\nelson\documents\visual studio 2010\Projects\iTune\iTune\obj\x86\Debug\iTune.pdb
